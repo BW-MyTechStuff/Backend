@@ -10,7 +10,7 @@ import java.util.Set;
 @Table(name = "userrole")
 public class UserRole
 {
-    /**
+    /** 
      * The primary key (long) of the userrole table.
      */
     @Id

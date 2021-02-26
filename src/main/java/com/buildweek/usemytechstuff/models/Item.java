@@ -6,7 +6,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "items")
-public class Item
+public class Item extends Auditable
 {
     /**
      * The primary key (long) of the users table.
