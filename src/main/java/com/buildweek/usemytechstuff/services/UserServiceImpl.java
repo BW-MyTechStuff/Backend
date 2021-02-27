@@ -46,7 +46,7 @@ public class UserServiceImpl implements UserService
     @Override
     public User findByName(String name)
     {
-        User uu = userRepository.findByUsername(name.toLowerCase());
+        User uu = userRepository.findByUsername(name);
         if (uu == null)
         {
             throw new ResourceNotFoundException("User name " + name + " not found!");
