@@ -20,7 +20,7 @@ VALUES (1, 'OWNER'),
 
 INSERT INTO USERS (userid, userroleid, username, email, password, createdby, createddate, lastmodifiedby,
                    lastmodifieddate)
-VALUES (1, 1, 'Hussain', 'hussain@gmail.com', 'password', 'SYSTEM', CURRENT_TIMESTAMP, 'SYSTEM',
+VALUES (1, 1, 'Hussain', 'hussain@gmail.com', '$2y$12$60LHaEM0yTTNtawNE/.GCOQqjlSHURGIEZRblhBV/LmAQpddStbx2', 'SYSTEM', CURRENT_TIMESTAMP, 'SYSTEM',
         CURRENT_TIMESTAMP),
        (2, 2, 'Leon', 'Leon@gmail.com', 'password', 'SYSTEM', CURRENT_TIMESTAMP, 'SYSTEM',
         CURRENT_TIMESTAMP),
@@ -32,7 +32,7 @@ VALUES (1, 1, 'Hussain', 'hussain@gmail.com', 'password', 'SYSTEM', CURRENT_TIME
 INSERT INTO ITEMS (itemid, userid, itemname, itemdescription, itemcostperday, itemstatusid, numberofdaysrented,
                    createdby, createddate, lastmodifiedby, lastmodifieddate)
 VALUES (1, 1, 'Speaker', 'Bluetooth speaker', 25.00 , 1, 0, 'SYSTEM', CURRENT_TIMESTAMP, 'SYSTEM', CURRENT_TIMESTAMP),
-       (2, 2, 'Macbook', 'Macbook Pro 15inch', 100.00 , 1, 0, 'SYSTEM', CURRENT_TIMESTAMP, 'SYSTEM', CURRENT_TIMESTAMP);
+       (2, 3, 'Macbook', 'Macbook Pro 15inch', 100.00 , 1, 0, 'SYSTEM', CURRENT_TIMESTAMP, 'SYSTEM', CURRENT_TIMESTAMP);
 
 /*
 We must tell hibernate the ids that have already been used.

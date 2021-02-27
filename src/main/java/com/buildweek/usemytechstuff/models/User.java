@@ -1,11 +1,15 @@
 package com.buildweek.usemytechstuff.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -144,5 +148,23 @@ public class User extends Auditable
     public void setItems(Set<Item> items)
     {
         this.items = items;
+    }
+
+    /**
+     * Internally, user security requires a list of authorities, roles, that the user has. This method is a simple way to provide those.
+     * Note that SimpleGrantedAuthority requests the format ROLE_role name all in capital letters!
+     *
+     * @return The list of authorities, roles, this user object has
+     */
+    @JsonIgnore
+    public List<SimpleGrantedAuthority> getAuthority()
+    {
+        List<SimpleGrantedAuthority> rtnList = new ArrayList<>();
+
+        String myRole = "ROLE_" + userrole.getUserroletype().toUpperCase();
+
+        rtnList.add(new SimpleGrantedAuthority(myRole));
+
+        return rtnList;
     }
 }
