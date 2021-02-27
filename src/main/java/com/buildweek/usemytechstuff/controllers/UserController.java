@@ -121,4 +121,39 @@ public class UserController
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+    /**
+     * Updates the user record associated with the given id with the provided data. Only the provided fields are affected.
+     * Roles are handled through different endpoints
+     * If an email list is given, it replaces the original emai list.
+     * <br> Example: <a href="http://localhost:2019/users/user/7">http://localhost:2019/users/user/7</a>
+     *
+     * @param updateUser An object containing values for just the fields that are being updated. All other fields are left NULL.
+     * @param id         The primary key of the user you wish to update.
+     * @return A status of OK
+     * @see UserService#update(User, long) UserService.update(User, long)
+     */
+    @PatchMapping(value = "/user/{id}", consumes = "application/json")
+    public ResponseEntity<?> updateUser(@RequestBody User updateUser, @PathVariable long id)
+    {
+        userService.update(updateUser, id);
+
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
