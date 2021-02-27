@@ -53,4 +53,22 @@ public class UserController
         return new ResponseEntity<>(user,
             HttpStatus.OK);
     }
+
+    /**
+     * Return a user object based on a given username
+     * <br>Example: <a href="http://localhost:2019/users/user/name/cinnamon">http://localhost:2019/users/user/name/cinnamon</a>
+     *
+     * @param userName the name of user (String) you seek
+     * @return JSON object of the user you seek
+     * @see UserService#findByName(String) UserService.findByName(String)
+     */
+    @GetMapping(value = "/user/name/{userName}",
+        produces = "application/json")
+    public ResponseEntity<?> getUserByName(@PathVariable String userName)
+    {
+        User u = userService.findByName(userName);
+        return new ResponseEntity<>(u, HttpStatus.OK);
+    }
+
+    
 }
