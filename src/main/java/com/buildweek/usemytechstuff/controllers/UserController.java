@@ -99,4 +99,26 @@ public class UserController
 
         return new ResponseEntity<>(null, responseHeaders, HttpStatus.CREATED);
     }
+
+    /**
+     * Given a complete User Object
+     * Given the user id, primary key, is in the User table,
+     * replace the User record and Useremail records.
+     * Roles are handled through different endpoints
+     * <br> Example: <a href="http://localhost:2019/users/user/15">http://localhost:2019/users/user/15</a>
+     *
+     * @param updateUser A complete User including all emails and roles to be used to
+     *                   replace the User. Roles must already exist.
+     * @param userid     The primary key of the user you wish to replace.
+     * @return status of OK
+     * @see UserService#save(User) UserService.save(User)
+     */
+    @PutMapping(value = "/user/{userid}", consumes = "application/json")
+    public ResponseEntity<?> updateFullUser(@Valid @RequestBody User updateUser, @PathVariable long userid)
+    {
+        updateUser.setUserid(userid);
+        userService.save(updateUser);
+
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }
