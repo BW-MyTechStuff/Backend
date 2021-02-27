@@ -35,4 +35,28 @@ public interface UserService
      * @param id id The primary key (long) of the user you seek.
      */
     void delete(long id);
+
+    /**
+     * Given a complete user object, saves that user object in the database.
+     * If a primary key is provided, the record is completely replaced
+     * If no primary key is provided, one is automatically generated and the record is added to the database.
+     *
+     * @param user the user object to be saved
+     * @return the saved user object including any automatically generated fields
+     */
+    User save(User user);
+
+    /**
+     * Updates the provided fields in the user record referenced by the primary key.
+     * <p>
+     * Regarding Role and Useremail items, this process only allows adding those. Deleting and editing those lists
+     * is done through a separate endpoint.
+     *
+     * @param user just the user fields to be updated.
+     * @param id   The primary key (long) of the user to update
+     * @return the complete user object that got updated
+     */
+    User update(
+        User user,
+        long id);
 }

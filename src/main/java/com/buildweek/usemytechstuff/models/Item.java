@@ -68,6 +68,13 @@ public class Item extends Auditable
         this.numberofdaysrented = numberofdaysrented;
     }
 
+    public Item(
+        User newUser,
+        String itemname)
+    {
+        super();
+    }
+
     // Getters and Setters
 
     public long getItemid()

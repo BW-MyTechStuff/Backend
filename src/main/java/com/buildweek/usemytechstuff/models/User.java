@@ -1,6 +1,8 @@
 package com.buildweek.usemytechstuff.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -110,8 +112,37 @@ public class User extends Auditable
         return password;
     }
 
-    public void setPassword(String password)
+    /**
+     * Setter for password to be used internally, after the password has already been encrypted
+     *
+     * @param password the new password (String) for the user. Comes in encrypted and stays that way
+     */
+    public void setPasswordNoEncrypt(String password)
     {
         this.password = password;
+    }
+
+    /**
+     * @param password the new password (String) for this user. Comes in plain text and goes out encrypted
+     */
+    public void setPassword(String password)
+    {
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        this.password = passwordEncoder.encode(password);
+    }
+
+    /**
+     * Getter for item combinations
+     *
+     * @return A list of items associated with this user
+     */
+    public Set<Item> getItems()
+    {
+        return items;
+    }
+
+    public void setItems(Set<Item> items)
+    {
+        this.items = items;
     }
 }

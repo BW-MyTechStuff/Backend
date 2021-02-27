@@ -1,14 +1,14 @@
 package com.buildweek.usemytechstuff.services;
 
-
+import com.buildweek.usemytechstuff.exceptions.ResourceNotFoundException;
+import com.buildweek.usemytechstuff.models.Item;
 import com.buildweek.usemytechstuff.models.User;
 import com.buildweek.usemytechstuff.repositories.UserRepository;
-import com.buildweek.usemytechstuff.repositories.UserRoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.oauth2.client.resource.OAuth2AccessDeniedException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,11 +22,9 @@ public class UserServiceImpl implements UserService
     @Autowired
     private UserRepository userRepository;
 
-    /**
-     * Connects this service to the UserRole table
-     */
+
     @Autowired
-    private UserRoleRepository userRoleRepository;
+    private HelperFunctions helperFunctions;
 
     @Override
     public List<User> findAll()
@@ -39,10 +37,10 @@ public class UserServiceImpl implements UserService
     }
 
     @Override
-    public User findByUserId(long id) throws EntityNotFoundException
+    public User findByUserId(long id) throws ResourceNotFoundException
     {
         return userRepository.findById(id)
-            .orElseThrow(()-> new EntityNotFoundException("User id " + id + " not found!"));
+            .orElseThrow(()-> new ResourceNotFoundException("User id " + id + " not found!"));
     }
 
     @Override
@@ -51,7 +49,7 @@ public class UserServiceImpl implements UserService
         User uu = userRepository.findByUsername(name.toLowerCase());
         if (uu == null)
         {
-            throw new EntityNotFoundException("User name " + name + " not found!");
+            throw new ResourceNotFoundException("User name " + name + " not found!");
         }
         return uu;
     }
@@ -61,7 +59,85 @@ public class UserServiceImpl implements UserService
     public void delete(long id)
     {
         userRepository.findById(id)
-            .orElseThrow(() -> new EntityNotFoundException("User id " + id + " not found!"));
+            .orElseThrow(() -> new ResourceNotFoundException("User id " + id + " not found!"));
         userRepository.deleteById(id);
     }
+
+    @Transactional
+    @Override
+    public User save(User user)
+    {
+        User newUser = new User();
+
+        if (user.getUserid() != 0)
+        {
+            userRepository.findById(user.getUserid())
+                .orElseThrow(() -> new ResourceNotFoundException("User id" + user.getUserid() + " not found!"));
+            newUser.setUserid(user.getUserid());
+        }
+
+        newUser.setUsername(user.getUsername().toLowerCase());
+        newUser.setPasswordNoEncrypt(user.getPassword());
+        newUser.setEmail(user.getEmail().toLowerCase());
+        newUser.setUserrole(user.getUserrole());
+
+        // dont need ad item when adding user, seperate form
+//        newUser.getItems().clear();
+//        for (Item item : user.getItems())
+//        {
+//            newUser.getItems().add(new Item(newUser, item.getItemname()));
+//        }
+
+        return userRepository.save(newUser);
+    }
+
+    @Transactional
+    @Override
+    public User update(
+        User user,
+        long id)
+    {
+        User currentuser = findByUserId(id);
+
+        if (helperFunctions.isAuthorizedToMakeChange(currentuser.getUsername()))
+        {
+            if (user.getUsername() != null)
+            {
+                currentuser.setUsername(user.getUsername().toLowerCase());
+            }
+
+            if (user.getPassword() != null)
+            {
+                currentuser.setPasswordNoEncrypt(user.getPassword());
+            }
+
+            if (user.getEmail() != null)
+            {
+                currentuser.setEmail(user.getEmail().toLowerCase());
+            }
+
+            if (user.getUserrole() != null)
+            {
+                currentuser.setUserrole(user.getUserrole());
+            }
+
+            // dont need to update item when updating user
+//            if (user.getItems().size() > 0)
+//            {
+//                currentuser.getItems().clear();
+//                for (Item i : user.getItems())
+//                {
+//                    currentuser.getItems().add(new Item(currentuser, i.getItemname()));
+//                }
+//            }
+            return userRepository.save(currentuser);
+        } else
+        {
+            // note we should never get to this line but is needed for the compiler
+            // to recognize that this exception can be thrown
+            throw new OAuth2AccessDeniedException();
+        }
+    }
+
+
 }
