@@ -112,7 +112,7 @@ public class ItemController
      * @param itemid the primary key of the user you wish to delete
      * @return Status of OK
      */
-    @DeleteMapping(value = "/item/{itemid}") 
+    @DeleteMapping(value = "/item/{itemid}")
     public ResponseEntity<?> deleteItemById(@PathVariable long itemid)
     {
         itemService.delete(itemid);
