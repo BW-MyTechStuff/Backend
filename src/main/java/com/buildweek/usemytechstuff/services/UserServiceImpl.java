@@ -77,6 +77,8 @@ public class UserServiceImpl implements UserService
         }
 
         newUser.setUsername(user.getUsername().toLowerCase());      // might not need to lower case
+        newUser.setFname(user.getFname());
+        newUser.setLname(user.getLname());
         newUser.setPasswordNoEncrypt(user.getPassword());
         newUser.setEmail(user.getEmail().toLowerCase());
         newUser.setUserrole(user.getUserrole());
@@ -102,6 +104,14 @@ public class UserServiceImpl implements UserService
             if (user.getUsername() != null)
             {
                 currentuser.setUsername(user.getUsername().toLowerCase());
+            }
+            if (user.getFname() != null)
+            {
+                currentuser.setFname(user.getFname().toLowerCase());
+            }
+            if (user.getLname() != null)
+            {
+                currentuser.setLname(user.getLname().toLowerCase());
             }
 
             if (user.getPassword() != null)

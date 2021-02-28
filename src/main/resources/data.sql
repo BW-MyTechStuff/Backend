@@ -18,15 +18,15 @@ INSERT INTO USERROLE (userroleid, userroletype)
 VALUES (1, 'OWNER'),
        (2, 'RENTER');
 
-INSERT INTO USERS (userid, userroleid, username, email, password, createdby, createddate, lastmodifiedby,
+INSERT INTO USERS (userid, userroleid, username, fname, lname, email, password, createdby, createddate, lastmodifiedby,
                    lastmodifieddate)
-VALUES (1, 1, 'Hussain', 'hussain@gmail.com', '$2y$12$60LHaEM0yTTNtawNE/.GCOQqjlSHURGIEZRblhBV/LmAQpddStbx2', 'SYSTEM', CURRENT_TIMESTAMP, 'SYSTEM',
+VALUES (1, 1, 'Hussain', 'Hussain', 'Ali', 'hussain@gmail.com', '$2y$12$60LHaEM0yTTNtawNE/.GCOQqjlSHURGIEZRblhBV/LmAQpddStbx2', 'SYSTEM', CURRENT_TIMESTAMP, 'SYSTEM',
         CURRENT_TIMESTAMP),
-       (2, 2, 'Leon', 'Leon@gmail.com', 'password', 'SYSTEM', CURRENT_TIMESTAMP, 'SYSTEM',
+       (2, 2, 'Leon',  'Leon', 'Nasswetter', 'Leon@gmail.com','password', 'SYSTEM', CURRENT_TIMESTAMP, 'SYSTEM',
         CURRENT_TIMESTAMP),
-       (3, 1, 'Tara', 'Tara@gmail.com', 'password', 'SYSTEM', CURRENT_TIMESTAMP, 'SYSTEM',
+       (3, 1, 'Tara', 'Tara', 'T', 'Tara@gmail.com', 'password', 'SYSTEM', CURRENT_TIMESTAMP, 'SYSTEM',
         CURRENT_TIMESTAMP),
-       (4, 2, 'Jason', 'Jason@gmail.com', 'password', 'SYSTEM', CURRENT_TIMESTAMP, 'SYSTEM',
+       (4, 2, 'Jason', 'Jason', 'Corchado', 'Jason@gmail.com', 'password', 'SYSTEM', CURRENT_TIMESTAMP, 'SYSTEM',
         CURRENT_TIMESTAMP);
 
 INSERT INTO ITEMS (itemid, userid, itemname, itemdescription, itemcostperday, itemstatusid, numberofdaysrented,

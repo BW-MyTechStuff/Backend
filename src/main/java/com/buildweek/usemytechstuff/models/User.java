@@ -36,6 +36,10 @@ public class User extends Auditable
 
     private String username;
 
+    private String fname;
+
+    private String lname;
+
     private String email;
 
     private String password;
@@ -59,14 +63,19 @@ public class User extends Auditable
     public User(
         UserRole userrole,
         String username,
+        String fname,
+        String lname,
         String email,
         String password)
     {
         this.userrole = userrole;
         this.username = username;
+        this.fname = fname;
+        this.lname = lname;
         this.email = email;
         this.password = password;
     }
+
 
     // Getters and Setters
 
@@ -99,6 +108,26 @@ public class User extends Auditable
     public void setUsername(String username)
     {
         this.username = username;
+    }
+
+    public String getFname()
+    {
+        return fname;
+    }
+
+    public void setFname(String fname)
+    {
+        this.fname = fname;
+    }
+
+    public String getLname()
+    {
+        return lname;
+    }
+
+    public void setLname(String lname)
+    {
+        this.lname = lname;
     }
 
     public String getEmail()
