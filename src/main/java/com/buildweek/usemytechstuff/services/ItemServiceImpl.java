@@ -4,6 +4,7 @@ import com.buildweek.usemytechstuff.exceptions.ResourceNotFoundException;
 import com.buildweek.usemytechstuff.models.Item;
 import com.buildweek.usemytechstuff.repositories.ItemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.oauth2.client.resource.OAuth2AccessDeniedException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,6 +20,9 @@ public class ItemServiceImpl implements ItemService
      */
     @Autowired
     private ItemRepository itemRepository;
+
+    @Autowired
+    private  HelperFunctions helperFunctions;
 
     @Override
     public List<Item> findAll()
@@ -52,15 +56,60 @@ public class ItemServiceImpl implements ItemService
     @Override
     public Item save(Item item)
     {
-        return null;
+        Item newItem = new Item();
+
+        if (item.getItemid() != 0)
+        {
+            itemRepository.findById(item.getItemid())
+                .orElseThrow(() -> new ResourceNotFoundException("Item id " + item.getItemid() + " not found!"));
+            newItem.setItemid(item.getItemid());
+        }
+
+        newItem.setItemname(item.getItemname());
+        newItem.setItemdescription(item.getItemdescription());
+        newItem.setItemcostperday(item.getItemcostperday());
+        newItem.setItemstatus(item.getItemstatus());
+        newItem.setNumberofdaysrented(item.getNumberofdaysrented());
+
+        return itemRepository.save(newItem);
     }
 
     @Transactional
     @Override
-    public Item update(
-        Item item,
-        long id)
+    public Item update(Item item, long id)
     {
-        return null;
+        Item currentItem = findByItemId(id);
+
+        if (helperFunctions.isAuthorizedToMakeChange(currentItem.getItemname()))
+        {
+            if (item.getItemname() != null)
+            {
+                currentItem.setItemname(item.getItemname());
+            }
+
+            if (item.getItemdescription() != null)
+            {
+                currentItem.setItemdescription(item.getItemdescription());
+            }
+            if (item.getItemcostperday() != 0)
+            {
+                currentItem.setItemcostperday(item.getItemcostperday());
+            }
+            if (item.getItemstatus() != null)
+            {
+                currentItem.setItemstatus(item.getItemstatus());
+            }
+            if (item.getNumberofdaysrented() != 0)
+            {
+                currentItem.setNumberofdaysrented(item.getNumberofdaysrented());
+            }
+            return itemRepository.save(currentItem);
+        } else
+        {
+            // note we should never get to this line but is needed for the compiler
+            // to recognize that this exception can be thrown
+            throw new OAuth2AccessDeniedException();
+        }
     }
+
 }

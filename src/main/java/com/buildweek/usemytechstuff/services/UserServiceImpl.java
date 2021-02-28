@@ -76,7 +76,7 @@ public class UserServiceImpl implements UserService
             newUser.setUserid(user.getUserid());
         }
 
-        newUser.setUsername(user.getUsername().toLowerCase());
+        newUser.setUsername(user.getUsername().toLowerCase());      // might not need to lower case
         newUser.setPasswordNoEncrypt(user.getPassword());
         newUser.setEmail(user.getEmail().toLowerCase());
         newUser.setUserrole(user.getUserrole());
@@ -93,9 +93,7 @@ public class UserServiceImpl implements UserService
 
     @Transactional
     @Override
-    public User update(
-        User user,
-        long id)
+    public User update(User user, long id)
     {
         User currentuser = findByUserId(id);
 
