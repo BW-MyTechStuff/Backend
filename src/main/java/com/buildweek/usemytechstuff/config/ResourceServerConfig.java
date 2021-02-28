@@ -47,7 +47,8 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter
                 "/v2/api-docs",
                 "/webjars/**",
                 "/createnewuser",
-                "/users/**")
+                "/users/**",
+                "/items/**")
             .permitAll()
             .antMatchers("/oauth/revoke-token",
                 "/logout")
