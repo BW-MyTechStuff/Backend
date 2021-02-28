@@ -65,6 +65,7 @@ public class ItemServiceImpl implements ItemService
             newItem.setItemid(item.getItemid());
         }
 
+        newItem.setUser(item.getUser());
         newItem.setItemname(item.getItemname());
         newItem.setItemdescription(item.getItemdescription());
         newItem.setItemcostperday(item.getItemcostperday());

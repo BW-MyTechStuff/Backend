@@ -52,15 +52,15 @@ public class Item extends Auditable
         // required by JPA
     }
 
+
+
     public Item(
-        User user,
         String itemname,
         String itemdescription,
         float itemcostperday,
         ItemStatus itemstatus,
         int numberofdaysrented)
     {
-        this.user = user;
         this.itemname = itemname;
         this.itemdescription = itemdescription;
         this.itemcostperday = itemcostperday;
