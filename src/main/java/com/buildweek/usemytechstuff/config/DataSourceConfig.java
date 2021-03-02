@@ -18,7 +18,7 @@ public class DataSourceConfig
     /**
      * The property from application properties. Defaults to H2
      */
-    @Value("${local.run.db:h2}")
+    @Value("${local.run.db:H2}")
     private String dbValue;
 
     /**
@@ -32,8 +32,7 @@ public class DataSourceConfig
      *
      * @return the datasource to use
      */
-    @Bean
-    public DataSource dataSource()
+    @Bean    public DataSource dataSource()
     {
         if (dbValue.equalsIgnoreCase("POSTGRESQL"))
         {
